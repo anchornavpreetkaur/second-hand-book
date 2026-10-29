@@ -1,0 +1,11 @@
+{
+  "name": "second-hand-book-app",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix frontend run dev",
+    "frontend": "npm --prefix frontend run dev",
+    "backend": "npm --prefix backend start",
+    "start": "npm --prefix backend start"
+  }
+}
