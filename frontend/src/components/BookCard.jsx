@@ -2,22 +2,40 @@ import React, { useState } from 'react';
 import { Heart, ExternalLink, Book as BookIcon } from 'lucide-react';
 
 export default function BookCard({ book, isWishlisted, onToggleWishlist }) {
+  if (!book) return null;
+
   const [imgError, setImgError] = useState(false);
-  const isLowest = book.isLowest;
+  const isLowest = Boolean(book.isLowest);
   const rawImage = book.image || book.coverImage;
   const showImage = Boolean(rawImage && !imgError);
+  const formattedPrice = typeof book.priceFormatted === 'string'
+    ? book.priceFormatted
+    : `$${(Number(book.price) || 0).toFixed(2)}`;
+
+  // Safe string values so React child object error can never happen
+  const safeCondition = (typeof book.condition === 'string' && book.condition.trim())
+    ? book.condition
+    : 'Used';
+
+  const safeAvailability = (typeof book.availability === 'string' && book.availability.trim())
+    ? book.availability
+    : 'In Stock';
+
+  const safeTitle = typeof book.title === 'string' ? book.title : 'Book Title';
+  const safeAuthor = typeof book.author === 'string' ? book.author : 'Unknown Author';
+  const safeWebsite = typeof book.website === 'string' ? book.website : 'Bookstore';
 
   return (
     <div className={`grid-book-card ${isLowest ? 'card-is-lowest' : ''}`}>
 
       <div className="card-top-bar">
-        <span className="store-pill">{book.website}</span>
+        <span className="store-pill">{safeWebsite}</span>
 
         <div className="card-top-right">
           {isLowest && <span className="lowest-pill">Lowest Price</span>}
           <button
             className={`card-heart-btn ${isWishlisted ? 'saved' : ''}`}
-            onClick={() => onToggleWishlist(book)}
+            onClick={() => onToggleWishlist && onToggleWishlist(book)}
             title={isWishlisted ? 'Remove from Wishlist' : 'Add to Wishlist'}
           >
             <Heart
@@ -34,7 +52,7 @@ export default function BookCard({ book, isWishlisted, onToggleWishlist }) {
         {showImage ? (
           <img
             src={rawImage}
-            alt={book.title}
+            alt={safeTitle}
             className="card-book-img"
             onError={() => setImgError(true)}
             loading="lazy"
@@ -42,8 +60,8 @@ export default function BookCard({ book, isWishlisted, onToggleWishlist }) {
         ) : (
           <div className="placeholder-box">
             <BookIcon size={34} color="#818cf8" />
-            <span className="placeholder-title" title={book.title}>
-              {book.title}
+            <span className="placeholder-title" title={safeTitle}>
+              {safeTitle}
             </span>
           </div>
         )}
@@ -51,25 +69,25 @@ export default function BookCard({ book, isWishlisted, onToggleWishlist }) {
 
       {/* Book Info */}
       <div className="card-info">
-        <h3 className="card-title" title={book.title}>
-          {book.title}
+        <h3 className="card-title" title={safeTitle}>
+          {safeTitle}
         </h3>
-        <p className="card-author">{book.author || 'Unknown Author'}</p>
+        <p className="card-author">{safeAuthor}</p>
 
         {/* Condition & Stock */}
         <div className="card-status-row">
-          <span className="condition-pill">{book.condition || 'Used'}</span>
-          <span className="stock-label">&bull; {book.availability || 'In Stock'}</span>
+          <span className="condition-pill">{safeCondition}</span>
+          <span className="stock-label">&bull; {safeAvailability}</span>
         </div>
 
         {/* Price & Action */}
         <div className="card-bottom-row">
           <span className={`card-price ${isLowest ? 'lowest-price-text' : ''}`}>
-            {book.priceFormatted || `€${Number(book.price).toFixed(2)}`}
+            {formattedPrice}
           </span>
 
           <a
-            href={book.sourceUrl || '#'}
+            href={typeof book.sourceUrl === 'string' ? book.sourceUrl : '#'}
             target="_blank"
             rel="noopener noreferrer"
             className="view-source-btn"

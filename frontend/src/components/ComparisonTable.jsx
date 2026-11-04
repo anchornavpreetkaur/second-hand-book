@@ -6,7 +6,7 @@ function TableImage({ src, title }) {
 
   if (!src || imgError) {
     return (
-      <div className="table-cover-fallback" title={title}>
+      <div className="table-cover-fallback" title={title || 'Book'}>
         <BookIcon size={16} color="#818cf8" />
       </div>
     );
@@ -15,7 +15,7 @@ function TableImage({ src, title }) {
   return (
     <img
       src={src}
-      alt={title}
+      alt={title || 'Book cover'}
       className="table-cover-thumb"
       onError={() => setImgError(true)}
       loading="lazy"
@@ -23,7 +23,11 @@ function TableImage({ src, title }) {
   );
 }
 
-export default function ComparisonTable({ books, wishlist = [], wishlistIds = [], onToggleWishlist }) {
+export default function ComparisonTable({ books = [], wishlist = [], wishlistIds = [], onToggleWishlist }) {
+  const safeBooks = Array.isArray(books) ? books.filter(Boolean) : [];
+  const safeWishlist = Array.isArray(wishlist) ? wishlist.filter(Boolean) : [];
+  const safeWishlistIds = Array.isArray(wishlistIds) ? wishlistIds : [];
+
   return (
     <div className="table-card-container">
       <table className="books-table">
@@ -40,22 +44,35 @@ export default function ComparisonTable({ books, wishlist = [], wishlistIds = []
           </tr>
         </thead>
         <tbody>
-          {books.map((book, index) => {
-            const bId = book.id || book._id;
-            const isSaved = wishlistIds.includes(bId) ||
-              wishlist.some(item => (item.bookId === bId) || (item.title === book.title && item.website === book.website));
-            const isLowest = book.isLowest;
+          {safeBooks.map((book, index) => {
+            if (!book) return null;
+            const bId = book.id || book._id || `book-row-${index}`;
+            const isSaved = safeWishlistIds.includes(bId) ||
+              safeWishlist.some(item => item && ((item.bookId === bId) || (item.title === book.title && item.website === book.website)));
+            const isLowest = Boolean(book.isLowest);
+            const formattedPrice = typeof book.priceFormatted === 'string'
+              ? book.priceFormatted
+              : `$${(Number(book.price) || 0).toFixed(2)}`;
+
+            // Safe string values so React child object error can never happen
+            const safeTitle = typeof book.title === 'string' ? book.title : 'Book Title';
+            const safeAuthor = typeof book.author === 'string' ? book.author : 'Unknown Author';
+            const safeIsbn = typeof book.isbn === 'string' ? book.isbn : 'ISBN: -';
+            const safeEdition = typeof book.edition === 'string' ? book.edition : 'Standard Edition';
+            const safeWebsite = typeof book.website === 'string' ? book.website : 'Store';
+            const safeCondition = typeof book.condition === 'string' ? book.condition : 'Used';
+            const safeAvailability = typeof book.availability === 'string' ? book.availability : 'In Stock';
 
             return (
               <tr
-                key={book.id || book._id || index}
+                key={bId}
                 className={isLowest ? 'row-lowest-match' : ''}
               >
                 {/* SAVE */}
                 <td style={{ textAlign: 'center' }}>
                   <button
                     className={`save-heart-btn ${isSaved ? 'saved' : ''}`}
-                    onClick={() => onToggleWishlist(book)}
+                    onClick={() => onToggleWishlist && onToggleWishlist(book)}
                     title={isSaved ? "Remove from Wishlist" : "Save to Wishlist"}
                   >
                     <Heart
@@ -71,11 +88,11 @@ export default function ComparisonTable({ books, wishlist = [], wishlistIds = []
                   <div className="table-book-info">
                     <TableImage
                       src={book.image || book.coverImage}
-                      title={book.title}
+                      title={safeTitle}
                     />
                     <div>
-                      <div className="table-book-title">{book.title}</div>
-                      <div className="table-book-author">{book.author || 'Unknown Author'}</div>
+                      <div className="table-book-title">{safeTitle}</div>
+                      <div className="table-book-author">{safeAuthor}</div>
                     </div>
                   </div>
                 </td>
@@ -83,20 +100,20 @@ export default function ComparisonTable({ books, wishlist = [], wishlistIds = []
                 {/* ISBN / EDITION */}
                 <td>
                   <div className="isbn-cell">
-                    <span className="isbn-text">{book.isbn || 'ISBN: -'}</span>
-                    <span className="edition-text">{book.edition || 'Standard Edition'}</span>
+                    <span className="isbn-text">{safeIsbn}</span>
+                    <span className="edition-text">{safeEdition}</span>
                   </div>
                 </td>
 
                 {/* WEBSITE */}
                 <td>
-                  <span className="badge-website">{book.website}</span>
+                  <span className="badge-website">{safeWebsite}</span>
                 </td>
 
                 {/* CONDITION */}
                 <td>
                   <span className="badge-condition">
-                    {book.condition || 'Used'}
+                    {safeCondition}
                   </span>
                 </td>
 
@@ -104,7 +121,7 @@ export default function ComparisonTable({ books, wishlist = [], wishlistIds = []
                 <td>
                   <div className="price-cell">
                     <span className={`price-text ${isLowest ? 'lowest' : ''}`}>
-                      {book.priceFormatted || `€${Number(book.price).toFixed(2)}`}
+                      {formattedPrice}
                     </span>
                     {isLowest && (
                       <span className="lowest-tag-badge">LOWEST</span>
@@ -114,13 +131,13 @@ export default function ComparisonTable({ books, wishlist = [], wishlistIds = []
 
                 {/* AVAILABILITY */}
                 <td>
-                  <span className="availability-cell">{book.availability || 'In Stock'}</span>
+                  <span className="availability-cell">{safeAvailability}</span>
                 </td>
 
                 {/* SOURCE LINK */}
                 <td>
                   <a
-                    href={book.sourceUrl || '#'}
+                    href={typeof book.sourceUrl === 'string' ? book.sourceUrl : '#'}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="view-source-btn"

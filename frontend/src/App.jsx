@@ -27,12 +27,12 @@ const POPULAR_FINLAND = [
 ];
 
 const WEBSITES_LIST = [
-  "All Websites (5)",
-  "Tori.fi",
-  "Antikvariaatti.net",
-  "Suomalainen.com",
-  "Finlandiakirja.fi",
-  "Adlibris.com"
+  "All Sources",
+  "PangoBooks",
+  "BooksRun",
+  "Google Books",
+  "IT Bookstore",
+  "ISBNDB Network"
 ];
 
 const CONDITIONS_LIST = [
@@ -57,12 +57,12 @@ export default function App() {
   const [viewMode, setViewMode] = useState('grid'); // 'table' or 'grid'
 
   // --- 2. FILTER & SORT STATE ---
-  const [selectedWebsite, setSelectedWebsite] = useState('All Websites (5)');
+  const [selectedWebsite, setSelectedWebsite] = useState('All Sources');
   const [selectedCondition, setSelectedCondition] = useState('All Conditions');
   const [sortBy, setSortBy] = useState('Lowest Price');
 
   // --- 3. AUTHENTICATION & USER STATE ---
-  // Retrieve saved user from browser's sessionStorage
+  // Retrieve saved user from browser's sessionStorage safely
   const [user, setUser] = useState(() => {
     try {
       const savedUser = sessionStorage.getItem('book_user');
@@ -83,12 +83,20 @@ export default function App() {
 
   // --- 5. THEME STATE (Default: dark mode) ---
   const [theme, setTheme] = useState(() => {
-    return localStorage.getItem('app_theme') || 'dark';
+    try {
+      return localStorage.getItem('app_theme') || 'dark';
+    } catch {
+      return 'dark';
+    }
   });
 
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('app_theme', theme);
+    try {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('app_theme', theme);
+    } catch {
+      // Ignore storage restrictions
+    }
   }, [theme]);
 
   const toggleTheme = () => {
@@ -107,7 +115,13 @@ export default function App() {
 
   // Load wishlist from MongoDB for the currently logged-in user
   const loadWishlistFromDB = async () => {
-    const token = sessionStorage.getItem('book_token');
+    let token = null;
+    try {
+      token = sessionStorage.getItem('book_token');
+    } catch {
+      token = null;
+    }
+
     if (!token) {
       setWishlist([]);
       return;
@@ -121,13 +135,14 @@ export default function App() {
       });
       const data = await response.json();
 
-      if (data.success && data.items) {
+      if (data && data.success && Array.isArray(data.items)) {
         setWishlist(data.items);
       } else {
         setWishlist([]);
       }
     } catch (error) {
       console.log('Error loading wishlist from database:', error);
+      setWishlist([]);
     }
   };
 
@@ -143,7 +158,13 @@ export default function App() {
   // Verify JWT session token with backend when app starts
   useEffect(() => {
     const verifyUserSession = async () => {
-      const token = sessionStorage.getItem('book_token');
+      let token = null;
+      try {
+        token = sessionStorage.getItem('book_token');
+      } catch {
+        token = null;
+      }
+
       if (!token) {
         setUser(null);
         return;
@@ -157,9 +178,11 @@ export default function App() {
         });
         const data = await response.json();
 
-        if (data.success && data.user) {
+        if (data && data.success && data.user) {
           setUser(data.user);
-          sessionStorage.setItem('book_user', JSON.stringify(data.user));
+          try {
+            sessionStorage.setItem('book_user', JSON.stringify(data.user));
+          } catch {}
         } else {
           // Token is invalid or expired
           handleLogout();
@@ -190,17 +213,21 @@ export default function App() {
     setUser(null);
     setWishlist([]);
     setAuthNotice('');
-    sessionStorage.removeItem('book_user');
-    sessionStorage.removeItem('book_token');
+    try {
+      sessionStorage.removeItem('book_user');
+      sessionStorage.removeItem('book_token');
+    } catch {}
   };
 
   const handleAuthSuccess = (userData, token) => {
     setUser(userData);
     setAuthNotice('');
-    sessionStorage.setItem('book_user', JSON.stringify(userData));
-    if (token) {
-      sessionStorage.setItem('book_token', token);
-    }
+    try {
+      sessionStorage.setItem('book_user', JSON.stringify(userData));
+      if (token) {
+        sessionStorage.setItem('book_token', token);
+      }
+    } catch {}
     setIsAuthModalOpen(false);
     loadWishlistFromDB();
   };
@@ -227,12 +254,14 @@ export default function App() {
     setActiveQuery(query);
     setHasSearched(true);
     setLoading(true);
+    setSelectedWebsite('All Sources');
+    setSelectedCondition('All Conditions');
 
     try {
       const response = await fetch(`${API_BASE_URL}/books/compare?q=${encodeURIComponent(query)}`);
       const data = await response.json();
 
-      if (data.success && data.listings) {
+      if (data && data.success && Array.isArray(data.listings)) {
         setBooks(data.listings);
       } else {
         setBooks([]);
@@ -251,7 +280,7 @@ export default function App() {
     setActiveQuery('');
     setHasSearched(false);
     setBooks([]);
-    setSelectedWebsite('All Websites (5)');
+    setSelectedWebsite('All Sources');
     setSelectedCondition('All Conditions');
     setSortBy('Lowest Price');
   };
@@ -260,31 +289,41 @@ export default function App() {
 
   // Helper: Check if a book is already in the wishlist
   const isBookWishlisted = (book) => {
+    if (!book || !Array.isArray(wishlist)) return false;
     const bookId = book.id || book._id;
     return wishlist.some(item =>
-      (item.bookId && item.bookId === bookId) ||
-      (item.id && item.id === bookId) ||
-      (item._id && item._id === bookId) ||
-      (item.title === book.title && item.website === book.website)
+      item && (
+        (item.bookId && item.bookId === bookId) ||
+        (item.id && item.id === bookId) ||
+        (item._id && item._id === bookId) ||
+        (item.title && item.title === book.title && item.website === book.website)
+      )
     );
   };
 
   // Toggle book in wishlist (Add if not saved, Remove if already saved)
   const handleToggleWishlist = async (book) => {
+    if (!book) return;
     if (!user) {
       requireLoginForWishlist();
       return;
     }
 
-    const token = sessionStorage.getItem('book_token');
+    let token = null;
+    try {
+      token = sessionStorage.getItem('book_token');
+    } catch {}
+
     const bookId = book.id || book._id;
 
     // Check if item is already in wishlist
-    const existing = wishlist.find(item =>
-      (item.bookId && item.bookId === bookId) ||
-      (item.id && item.id === bookId) ||
-      (item._id && item._id === bookId) ||
-      (item.title === book.title && item.website === book.website)
+    const existing = (Array.isArray(wishlist) ? wishlist : []).find(item =>
+      item && (
+        (item.bookId && item.bookId === bookId) ||
+        (item.id && item.id === bookId) ||
+        (item._id && item._id === bookId) ||
+        (item.title === book.title && item.website === book.website)
+      )
     );
 
     if (existing) {
@@ -297,7 +336,8 @@ export default function App() {
         });
 
         setWishlist(prevList =>
-          prevList.filter(item =>
+          (Array.isArray(prevList) ? prevList : []).filter(item =>
+            item &&
             (item._id || item.id) !== (existing._id || existing.id) &&
             item.title !== existing.title
           )
@@ -318,8 +358,8 @@ export default function App() {
         });
         const data = await response.json();
 
-        if (data.success && data.item) {
-          setWishlist(prevList => [data.item, ...prevList]);
+        if (data && data.success && data.item) {
+          setWishlist(prevList => [data.item, ...(Array.isArray(prevList) ? prevList : [])]);
         }
       } catch (error) {
         console.log('Error saving to wishlist:', error);
@@ -329,13 +369,18 @@ export default function App() {
 
   // Remove a single book from wishlist modal
   const handleRemoveWishlistItem = async (itemToRemove) => {
+    if (!itemToRemove) return;
     if (!user) {
       requireLoginForWishlist();
       return;
     }
 
     try {
-      const token = sessionStorage.getItem('book_token');
+      let token = null;
+      try {
+        token = sessionStorage.getItem('book_token');
+      } catch {}
+
       const id = itemToRemove._id || itemToRemove.bookId || itemToRemove.id;
 
       await fetch(`${API_BASE_URL}/wishlist/${id}`, {
@@ -344,7 +389,8 @@ export default function App() {
       });
 
       setWishlist(prevList =>
-        prevList.filter(item =>
+        (Array.isArray(prevList) ? prevList : []).filter(item =>
+          item &&
           (item._id || item.id) !== (itemToRemove._id || itemToRemove.id) &&
           item.title !== itemToRemove.title
         )
@@ -362,7 +408,11 @@ export default function App() {
     }
 
     try {
-      const token = sessionStorage.getItem('book_token');
+      let token = null;
+      try {
+        token = sessionStorage.getItem('book_token');
+      } catch {}
+
       await fetch(`${API_BASE_URL}/wishlist`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
@@ -384,39 +434,51 @@ export default function App() {
   };
 
   // --- 10. FILTER AND SORT COMPUTATIONS ---
-  const filteredBooks = books
+  const safeBooks = Array.isArray(books) ? books.filter(Boolean) : [];
+  const safeWishlist = Array.isArray(wishlist) ? wishlist.filter(Boolean) : [];
+
+  const filteredBooks = safeBooks
     .filter(book => {
+      if (!book) return false;
       // Filter by Bookstore Website
-      if (selectedWebsite !== 'All Websites (5)' && selectedWebsite !== 'All Websites (3)') {
+      if (selectedWebsite !== 'All Sources') {
         if (book.website !== selectedWebsite) return false;
       }
       // Filter by Book Condition (Used vs New)
       if (selectedCondition !== 'All Conditions') {
-        if (book.condition.toLowerCase() !== selectedCondition.toLowerCase()) return false;
+        const cond = (typeof book.condition === 'string' ? book.condition : 'Used').toLowerCase();
+        const target = (selectedCondition || '').toLowerCase();
+        if (!cond.includes(target) && !target.includes(cond)) return false;
       }
       return true;
     })
     .sort((a, b) => {
+      if (!a || !b) return 0;
+      const priceA = Number(a.price) || 0;
+      const priceB = Number(b.price) || 0;
+      const titleA = a.title || '';
+      const titleB = b.title || '';
+
       // Sort Options
-      if (sortBy === 'Lowest Price') return a.price - b.price;
-      if (sortBy === 'Highest Price') return b.price - a.price;
-      if (sortBy === 'Title (A-Z)') return a.title.localeCompare(b.title);
+      if (sortBy === 'Lowest Price') return priceA - priceB;
+      if (sortBy === 'Highest Price') return priceB - priceA;
+      if (sortBy === 'Title (A-Z)') return titleA.localeCompare(titleB);
       return 0;
     });
 
   // Calculate lowest price and best bookstore for the Summary Banner
-  let lowestBook = books.find(b => b.isLowest === true);
-  if (!lowestBook && books.length > 0) {
-    const sortedByPrice = [...books].sort((a, b) => a.price - b.price);
+  let lowestBook = safeBooks.find(b => b && b.isLowest === true);
+  if (!lowestBook && safeBooks.length > 0) {
+    const sortedByPrice = [...safeBooks].sort((a, b) => (Number(a?.price) || 0) - (Number(b?.price) || 0));
     lowestBook = sortedByPrice[0];
   }
 
   const bestPriceText = lowestBook
-    ? (lowestBook.priceFormatted || `€${Number(lowestBook.price).toFixed(2)}`)
-    : '€0.00';
-  const lowestStoreName = lowestBook ? lowestBook.website : 'Antikvariaatti.net';
+    ? (lowestBook.priceFormatted || `$${(Number(lowestBook.price) || 0).toFixed(2)}`)
+    : '$0.00';
+  const lowestStoreName = lowestBook ? (lowestBook.website || 'BooksRun') : 'BooksRun';
 
-  const wishlistIds = wishlist.map(item => item.id || item._id);
+  const wishlistIds = safeWishlist.map(item => item && (item.id || item._id)).filter(Boolean);
 
   // --- 11. USER INTERFACE (RENDER) ---
   return (
@@ -427,7 +489,7 @@ export default function App() {
         onOpenLogin={handleOpenLogin}
         onOpenSignup={handleOpenSignup}
         onLogout={handleLogout}
-        wishlistCount={user ? wishlist.length : 0}
+        wishlistCount={user ? safeWishlist.length : 0}
         onOpenWishlist={handleWishlistClick}
         theme={theme}
         onToggleTheme={toggleTheme}
@@ -523,7 +585,7 @@ export default function App() {
             {/* 4-Column Summary Banner */}
             <ComparisonBanner
               searchQuery={activeQuery || searchTerm}
-              totalListings={books.length}
+              totalListings={safeBooks.length}
               bestPrice={bestPriceText}
               lowestPriceStore={lowestStoreName}
             />
@@ -604,18 +666,29 @@ export default function App() {
             {loading ? (
               <div className="loading-state">
                 <div className="spinner"></div>
-                <p>Searching Finnish bookstores and comparing prices...</p>
+                <p>Searching book APIs and comparing prices...</p>
               </div>
             ) : filteredBooks.length === 0 ? (
               <div className="empty-state">
                 <h3>No books found matching your filter criteria.</h3>
-                <p>Try selecting "All Websites" or "All Conditions".</p>
+                <p>Try selecting "All Sources" or "All Conditions".</p>
+                <button
+                  type="button"
+                  className="suggestion-pill"
+                  style={{ marginTop: '12px' }}
+                  onClick={() => {
+                    setSelectedWebsite('All Sources');
+                    setSelectedCondition('All Conditions');
+                  }}
+                >
+                  Reset Filters
+                </button>
               </div>
             ) : viewMode === 'table' ? (
               /* Table View */
               <ComparisonTable
                 books={filteredBooks}
-                wishlist={wishlist}
+                wishlist={safeWishlist}
                 wishlistIds={wishlistIds}
                 onToggleWishlist={handleToggleWishlist}
               />
@@ -640,7 +713,7 @@ export default function App() {
       <WishlistModal
         isOpen={isWishlistOpen}
         onClose={() => setIsWishlistOpen(false)}
-        wishlist={wishlist}
+        wishlist={safeWishlist}
         onRemoveItem={handleRemoveWishlistItem}
         onClearAll={handleClearWishlist}
         user={user}

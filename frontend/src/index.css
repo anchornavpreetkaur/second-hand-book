@@ -1386,3 +1386,1138 @@ body {
 .auth-switch-link:hover {
   color: #a5b4fc;
 }
+
+/* Friendly bookshop color refresh */
+:root {
+  --bg-page: #17162d;
+  --bg-card: #242044;
+  --bg-subtle: #2d2850;
+  --border-color: #48416f;
+  --border-input: #5a5287;
+  --text-main: #fffaf5;
+  --text-muted: #c9c4e6;
+  --text-dim: #9e98c2;
+  --primary-purple: #8b7cf6;
+  --primary-purple-hover: #7565e8;
+  --banner-bg: #352c68;
+  --banner-border: #7264d4;
+  --green-deal: #43d6a0;
+  --green-deal-bg: rgba(67, 214, 160, 0.16);
+  --red-accent: #ff7896;
+}
+
+body {
+  background:
+    radial-gradient(circle at 8% 0%, rgba(139, 124, 246, 0.2), transparent 30rem),
+    radial-gradient(circle at 92% 18%, rgba(255, 120, 150, 0.12), transparent 26rem),
+    var(--bg-page);
+}
+
+.navbar {
+  background: rgba(25, 22, 53, 0.94);
+  border-bottom-color: #3a345f;
+  box-shadow: 0 6px 24px rgba(8, 6, 24, 0.22);
+}
+
+.brand-icon,
+.nav-btn.nav-btn-primary,
+.search-submit-btn,
+.auth-submit-btn,
+.auth-tab-btn.active {
+  background: linear-gradient(135deg, #9a8cff, #7565e8);
+  border-color: transparent;
+}
+
+.brand-icon {
+  box-shadow: 0 6px 16px rgba(139, 124, 246, 0.35);
+}
+
+.brand-subtitle,
+.sparkle-label,
+.popular-title {
+  color: #c3b9ff;
+}
+
+.nav-btn {
+  border-color: #4a4372;
+  color: #e6e1ff;
+}
+
+.nav-btn:hover {
+  background-color: #332d5c;
+  border-color: #8174dc;
+}
+
+.hero-section {
+  padding-top: 52px;
+}
+
+.hero-title {
+  background: linear-gradient(90deg, #fffaf5, #cfc5ff, #ffb6c6);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-subtitle {
+  color: #c9c4e6;
+}
+
+.search-input-box {
+  background: rgba(38, 33, 72, 0.92);
+  border-color: #554c86;
+  box-shadow: 0 12px 30px rgba(8, 6, 24, 0.26);
+}
+
+.search-input-box:focus-within {
+  border-color: #a99dff;
+  box-shadow: 0 0 0 4px rgba(139, 124, 246, 0.16);
+}
+
+.search-input {
+  color: #fffaf5;
+}
+
+.search-icon {
+  color: #b6aaff;
+}
+
+.suggestion-pill,
+.popular-pills .suggestion-pill {
+  background: #292348;
+  border-color: #504779;
+  color: #e7e1ff;
+}
+
+.suggestion-pill:hover {
+  background: #40366e;
+  border-color: #978aff;
+  color: #ffffff;
+}
+
+.popular-divider {
+  background-color: #3f3865;
+}
+
+.summary-banner-card {
+  background: linear-gradient(135deg, #3c3275, #2c2656);
+  border-color: #7568d9;
+  box-shadow: 0 14px 30px rgba(8, 6, 24, 0.24);
+}
+
+.banner-label {
+  color: #c9c4e6;
+}
+
+.banner-val-price,
+.stock-label,
+.availability-cell,
+.lowest-price-text,
+.price-text.lowest {
+  color: #58e0aa !important;
+}
+
+.filter-toolbar,
+.table-card-container,
+.grid-book-card {
+  background: rgba(36, 32, 68, 0.94);
+  border-color: #49416e;
+}
+
+.filter-toolbar {
+  box-shadow: 0 8px 20px rgba(8, 6, 24, 0.14);
+}
+
+.filter-icon-label,
+.listings-count {
+  color: #c9c4e6;
+}
+
+.filter-select,
+.toggle-view-btn {
+  background-color: #2e2852;
+  border-color: #524a7d;
+  color: #f0ecff;
+}
+
+.filter-select:focus {
+  border-color: #9a8cff;
+}
+
+.toggle-view-btn.active {
+  background: linear-gradient(135deg, #8b7cf6, #6e5dde);
+}
+
+.books-table th {
+  background-color: #302957;
+  color: #c9c4e6;
+  border-bottom-color: #4a4270;
+}
+
+.books-table td {
+  border-bottom-color: #39335d;
+}
+
+.row-lowest-match {
+  background-color: rgba(67, 214, 160, 0.14) !important;
+  border-left-color: #43d6a0;
+}
+
+.grid-book-card:hover {
+  transform: translateY(-5px);
+  border-color: #8f82f2;
+  box-shadow: 0 14px 26px rgba(8, 6, 24, 0.22);
+}
+
+.grid-book-card.card-is-lowest {
+  border-color: #43d6a0;
+  box-shadow: 0 0 0 1px rgba(67, 214, 160, 0.16);
+}
+
+.card-image-wrap,
+.table-cover-thumb,
+.wishlist-thumb-box {
+  background: linear-gradient(145deg, #302957, #211d3d);
+}
+
+.store-pill,
+.badge-website {
+  background-color: #302957;
+  border-color: #554c80;
+  color: #ddd7ff;
+}
+
+.lowest-pill,
+.lowest-tag-badge {
+  background: #43d6a0;
+  color: #172a29;
+}
+
+.condition-pill,
+.badge-condition {
+  background: #ffd1a8;
+  color: #4e2f2c;
+}
+
+.view-source-btn,
+.wishlist-view-btn {
+  background: #40366e;
+  border-color: #6a5fc0;
+  color: #e4ddff;
+}
+
+.view-source-btn:hover,
+.wishlist-view-btn:hover {
+  background: #574a91;
+  color: #ffffff;
+}
+
+.card-bottom-row {
+  border-top-color: #413963;
+}
+
+.modal-backdrop {
+  background-color: rgba(9, 7, 24, 0.72);
+}
+
+.wishlist-modal-card,
+.auth-modal-card {
+  background: linear-gradient(145deg, #282249, #201c3b);
+  border-color: #5b518c;
+  box-shadow: 0 24px 60px rgba(7, 5, 20, 0.55);
+}
+
+.wishlist-header-icon {
+  background: linear-gradient(135deg, #ff829f, #e8567d);
+}
+
+.wishlist-value-strip,
+.wishlist-entry-card,
+.auth-tabs,
+.auth-input {
+  background-color: #302957;
+  border-color: #514878;
+}
+
+.wishlist-entry-card {
+  border-color: #4a416e;
+}
+
+.wishlist-entry-card:hover {
+  border-color: #887be2;
+}
+
+.wishlist-modal-title,
+.wishlist-entry-title,
+.wishlist-entry-price,
+.card-title,
+.table-book-title {
+  color: #fffaf5;
+}
+
+.wishlist-modal-subtitle,
+.wishlist-entry-author,
+.placeholder-title,
+.table-book-author {
+  color: #c0badc;
+}
+
+.auth-input:focus {
+  border-color: #a99dff;
+  box-shadow: 0 0 0 3px rgba(139, 124, 246, 0.14);
+}
+
+.spinner {
+  border-color: #433b69;
+  border-top-color: #a99dff;
+}
+
+[data-theme="light"] {
+  --bg-page: #fff8f1;
+  --bg-card: #ffffff;
+  --bg-subtle: #fff0e4;
+  --border-color: #ead9d0;
+  --border-input: #d7c5c1;
+  --text-main: #312442;
+  --text-muted: #70627e;
+  --text-dim: #9a8ca5;
+  --primary-purple: #7259d8;
+  --primary-purple-hover: #5b43c2;
+  --banner-bg: #f0ebff;
+  --banner-border: #c9bdf5;
+  --green-deal: #168c68;
+  --green-deal-bg: rgba(22, 140, 104, 0.1);
+  --red-accent: #d94d72;
+}
+
+[data-theme="light"] body {
+  background:
+    radial-gradient(circle at 8% 0%, rgba(255, 202, 157, 0.28), transparent 30rem),
+    radial-gradient(circle at 92% 18%, rgba(200, 190, 255, 0.3), transparent 26rem),
+    var(--bg-page);
+}
+
+[data-theme="light"] .navbar {
+  background: rgba(255, 251, 247, 0.94);
+  border-bottom-color: #ead9d0;
+}
+
+[data-theme="light"] .brand-title,
+[data-theme="light"] .hero-title {
+  color: #312442;
+  background: none;
+  -webkit-text-fill-color: initial;
+}
+
+[data-theme="light"] .hero-subtitle,
+[data-theme="light"] .nav-btn,
+[data-theme="light"] .filter-icon-label,
+[data-theme="light"] .listings-count {
+  color: #70627e;
+}
+
+[data-theme="light"] .search-input-box,
+[data-theme="light"] .filter-toolbar,
+[data-theme="light"] .table-card-container,
+[data-theme="light"] .grid-book-card {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: #ead9d0;
+}
+
+[data-theme="light"] .search-input {
+  color: #312442;
+}
+
+[data-theme="light"] .search-input::placeholder {
+  color: #aa9bad;
+}
+
+[data-theme="light"] .summary-banner-card {
+  background: linear-gradient(135deg, #eee8ff, #fff0e4);
+  border-color: #c9bdf5;
+}
+
+[data-theme="light"] .banner-label {
+  color: #70627e;
+}
+
+[data-theme="light"] .banner-val-query,
+[data-theme="light"] .banner-val-bold,
+[data-theme="light"] .banner-val-store,
+[data-theme="light"] .card-title,
+[data-theme="light"] .table-book-title,
+[data-theme="light"] .price-text,
+[data-theme="light"] .card-price {
+  color: #312442;
+}
+
+[data-theme="light"] .filter-select,
+[data-theme="light"] .toggle-view-btn,
+[data-theme="light"] .books-table th,
+[data-theme="light"] .store-pill,
+[data-theme="light"] .badge-website {
+  background-color: #fff6ef;
+  border-color: #dfcbc5;
+  color: #51435f;
+}
+
+[data-theme="light"] .books-table th {
+  background-color: #fff0e4;
+}
+
+[data-theme="light"] .books-table td {
+  border-bottom-color: #f0dfd7;
+}
+
+[data-theme="light"] .card-image-wrap,
+[data-theme="light"] .table-cover-thumb,
+[data-theme="light"] .wishlist-thumb-box {
+  background: linear-gradient(145deg, #fff0e4, #eee8ff);
+}
+
+[data-theme="light"] .modal-backdrop {
+  background-color: rgba(49, 36, 66, 0.42);
+}
+
+[data-theme="light"] .wishlist-modal-card,
+[data-theme="light"] .auth-modal-card {
+  background: #fffdfb;
+  border-color: #ead9d0;
+}
+
+[data-theme="light"] .wishlist-value-strip,
+[data-theme="light"] .wishlist-entry-card,
+[data-theme="light"] .auth-tabs,
+[data-theme="light"] .auth-input {
+  background-color: #fff6ef;
+  border-color: #ead9d0;
+}
+
+/* Clean professional bookstore theme */
+:root,
+[data-theme="light"] {
+  --bg-page: #f7f9fc;
+  --bg-card: #ffffff;
+  --bg-subtle: #f1f5f9;
+  --border-color: #e2e8f0;
+  --border-input: #cbd5e1;
+  --text-main: #172033;
+  --text-muted: #64748b;
+  --text-dim: #94a3b8;
+  --primary-purple: #2563eb;
+  --primary-purple-hover: #1d4ed8;
+  --banner-bg: #eff6ff;
+  --banner-border: #bfdbfe;
+  --green-deal: #15803d;
+  --green-deal-bg: #f0fdf4;
+  --red-accent: #dc2626;
+}
+
+body,
+[data-theme="light"] body {
+  background: #f7f9fc;
+  color: #172033;
+}
+
+.navbar,
+[data-theme="light"] .navbar {
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+}
+
+.brand-icon,
+.nav-btn.nav-btn-primary,
+.search-submit-btn,
+.auth-submit-btn,
+.auth-tab-btn.active {
+  background: #2563eb;
+  border-color: #2563eb;
+  box-shadow: none;
+}
+
+.brand-icon {
+  border-radius: 6px;
+}
+
+.brand-title,
+[data-theme="light"] .brand-title {
+  color: #172033;
+}
+
+.brand-subtitle,
+.sparkle-label,
+.popular-title {
+  color: #2563eb;
+}
+
+.nav-btn,
+[data-theme="light"] .nav-btn {
+  background: #ffffff;
+  border-color: #d7e0eb;
+  color: #475569;
+}
+
+.nav-btn:hover {
+  background: #f8fafc;
+  border-color: #93c5fd;
+  color: #1d4ed8;
+}
+
+.hero-section {
+  padding-top: 44px;
+}
+
+.hero-title,
+[data-theme="light"] .hero-title {
+  background: none;
+  color: #172033;
+  -webkit-text-fill-color: initial;
+}
+
+.hero-subtitle,
+[data-theme="light"] .hero-subtitle {
+  color: #64748b;
+}
+
+.search-input-box,
+[data-theme="light"] .search-input-box {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+}
+
+.search-input-box:focus-within {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.search-icon {
+  color: #64748b;
+}
+
+.search-input,
+[data-theme="light"] .search-input {
+  color: #172033;
+}
+
+.search-input::placeholder,
+[data-theme="light"] .search-input::placeholder {
+  color: #94a3b8;
+}
+
+.suggestion-pill,
+.popular-pills .suggestion-pill {
+  background: #ffffff;
+  border-color: #d7e0eb;
+  color: #475569;
+}
+
+.suggestion-pill:hover {
+  background: #eff6ff;
+  border-color: #93c5fd;
+  color: #1d4ed8;
+}
+
+.popular-divider {
+  background: #e2e8f0;
+}
+
+.summary-banner-card,
+[data-theme="light"] .summary-banner-card {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  box-shadow: none;
+}
+
+.banner-label {
+  color: #64748b;
+}
+
+.banner-val-query,
+.banner-val-bold,
+.banner-val-store,
+[data-theme="light"] .banner-val-query,
+[data-theme="light"] .banner-val-bold,
+[data-theme="light"] .banner-val-store {
+  color: #172033;
+}
+
+.banner-val-price,
+.stock-label,
+.availability-cell,
+.lowest-price-text,
+.price-text.lowest {
+  color: #15803d !important;
+}
+
+.filter-toolbar,
+.table-card-container,
+.grid-book-card,
+[data-theme="light"] .filter-toolbar,
+[data-theme="light"] .table-card-container,
+[data-theme="light"] .grid-book-card {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: none;
+}
+
+.filter-icon-label,
+.listings-count {
+  color: #64748b;
+}
+
+.filter-select,
+.toggle-view-btn,
+[data-theme="light"] .filter-select,
+[data-theme="light"] .toggle-view-btn {
+  background: #ffffff;
+  border-color: #cbd5e1;
+  color: #475569;
+}
+
+.toggle-view-btn.active {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.books-table th,
+[data-theme="light"] .books-table th {
+  background: #f8fafc;
+  color: #64748b;
+  border-bottom-color: #e2e8f0;
+}
+
+.books-table td,
+[data-theme="light"] .books-table td {
+  border-bottom-color: #eef2f7;
+}
+
+.row-lowest-match {
+  background: #f0fdf4 !important;
+  border-left-color: #22c55e;
+}
+
+.grid-book-card:hover {
+  transform: translateY(-3px);
+  border-color: #93c5fd;
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
+}
+
+.grid-book-card.card-is-lowest {
+  border-color: #86efac;
+  box-shadow: none;
+}
+
+.card-image-wrap,
+[data-theme="light"] .card-image-wrap,
+.table-cover-thumb,
+[data-theme="light"] .table-cover-thumb,
+.wishlist-thumb-box,
+[data-theme="light"] .wishlist-thumb-box {
+  background: #f8fafc;
+}
+
+.store-pill,
+.badge-website,
+[data-theme="light"] .store-pill,
+[data-theme="light"] .badge-website {
+  background: #f8fafc;
+  border-color: #d7e0eb;
+  color: #475569;
+}
+
+.lowest-pill,
+.lowest-tag-badge {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.condition-pill,
+.badge-condition {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.view-source-btn,
+.wishlist-view-btn {
+  background: #eff6ff;
+  border-color: #bfdbfe;
+  color: #1d4ed8;
+}
+
+.view-source-btn:hover,
+.wishlist-view-btn:hover {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.card-bottom-row {
+  border-top-color: #eef2f7;
+}
+
+.card-title,
+.table-book-title,
+.card-price,
+.price-text,
+[data-theme="light"] .card-title,
+[data-theme="light"] .table-book-title,
+[data-theme="light"] .card-price,
+[data-theme="light"] .price-text {
+  color: #172033;
+}
+
+.card-author,
+.table-book-author,
+.placeholder-title {
+  color: #64748b;
+}
+
+.modal-backdrop,
+[data-theme="light"] .modal-backdrop {
+  background: rgba(15, 23, 42, 0.42);
+}
+
+.wishlist-modal-card,
+.auth-modal-card,
+[data-theme="light"] .wishlist-modal-card,
+[data-theme="light"] .auth-modal-card {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 20px 45px rgba(15, 23, 42, 0.18);
+}
+
+.wishlist-header-icon,
+.auth-header-icon {
+  background: #2563eb;
+  box-shadow: none;
+}
+
+.wishlist-value-strip,
+.wishlist-entry-card,
+.auth-tabs,
+.auth-input,
+[data-theme="light"] .wishlist-value-strip,
+[data-theme="light"] .wishlist-entry-card,
+[data-theme="light"] .auth-tabs,
+[data-theme="light"] .auth-input {
+  background: #f8fafc;
+  border-color: #e2e8f0;
+}
+
+.wishlist-entry-card:hover {
+  border-color: #93c5fd;
+}
+
+.wishlist-modal-title,
+.wishlist-entry-title,
+.wishlist-entry-price,
+[data-theme="light"] .wishlist-modal-title,
+[data-theme="light"] .wishlist-entry-title,
+[data-theme="light"] .wishlist-entry-price {
+  color: #172033;
+}
+
+.wishlist-modal-subtitle,
+.wishlist-entry-author {
+  color: #64748b;
+}
+
+.auth-input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.spinner {
+  border-color: #dbeafe;
+  border-top-color: #2563eb;
+}
+
+/* Reference-inspired compact comparison layout */
+body,
+[data-theme="light"] body {
+  background: #ffffff;
+}
+
+.main-content {
+  max-width: 1180px;
+  padding: 0 18px 34px;
+}
+
+.navbar,
+[data-theme="light"] .navbar {
+  position: relative;
+  box-shadow: none;
+  border-bottom: 1px solid #aeb8c4;
+}
+
+.navbar-container {
+  max-width: 1180px;
+  padding: 9px 18px;
+}
+
+.navbar-brand {
+  gap: 9px;
+}
+
+.brand-icon {
+  width: 31px;
+  height: 31px;
+  border-radius: 2px;
+}
+
+.brand-logo {
+  width: 36px;
+  height: 36px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid #d7e0eb;
+  background: #fffaf0;
+}
+
+[data-theme="dark"] .brand-logo {
+  border-color: #475569;
+}
+
+.brand-title {
+  font-size: 0.96rem;
+}
+
+.brand-subtitle {
+  display: none;
+}
+
+.navbar-actions {
+  gap: 8px;
+}
+
+.nav-btn {
+  min-height: 28px;
+  padding: 5px 14px;
+  border-radius: 5px;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.nav-btn.nav-btn-primary {
+  background: #087bc1;
+  border-color: #087bc1;
+}
+
+.wishlist-nav-btn {
+  border: none;
+  color: #0075bd;
+  background: transparent;
+}
+
+.wishlist-nav-btn:hover {
+  background: #eef7fc;
+  border-color: transparent;
+}
+
+.hero-section {
+  margin: 0 -18px;
+  padding: 28px 18px 31px;
+  background: #050505;
+  border: 2px solid #008bd2;
+}
+
+.hero-title,
+[data-theme="light"] .hero-title {
+  color: #ffffff;
+  font-size: 1.65rem;
+  margin-bottom: 10px;
+  -webkit-text-fill-color: initial;
+}
+
+.hero-subtitle,
+[data-theme="light"] .hero-subtitle {
+  color: #d7d7d7;
+  font-size: 0.76rem;
+  margin-bottom: 16px;
+}
+
+.search-bar-wrapper {
+  max-width: 470px;
+  margin-bottom: 0;
+}
+
+.search-input-box,
+[data-theme="light"] .search-input-box {
+  padding: 0;
+  border: 0;
+  border-radius: 5px;
+  box-shadow: none;
+  overflow: hidden;
+}
+
+.search-icon,
+.clear-search-btn {
+  display: none;
+}
+
+.search-input,
+[data-theme="light"] .search-input {
+  min-height: 31px;
+  padding: 8px 11px;
+  font-size: 0.7rem;
+}
+
+.search-submit-btn {
+  min-height: 31px;
+  padding: 8px 20px;
+  border-radius: 0;
+  background: #087bc1;
+  font-size: 0.7rem;
+}
+
+.search-submit-btn:hover {
+  background: #056aa7;
+}
+
+.try-searching-row,
+.popular-finland-container {
+  display: none;
+}
+
+.results-container {
+  padding-top: 20px;
+}
+
+.summary-banner-card,
+[data-theme="light"] .summary-banner-card {
+  margin: 0 0 14px;
+  padding: 13px 18px;
+  border: 1px solid #d5dbe2;
+  border-radius: 3px;
+  background: #ffffff;
+  box-shadow: none;
+}
+
+.banner-label {
+  font-size: 0.6rem;
+}
+
+.banner-val-query,
+.banner-val-bold,
+.banner-val-price,
+.banner-val-store {
+  font-size: 0.86rem;
+}
+
+.filter-toolbar {
+  margin-bottom: 12px;
+  padding: 7px 10px;
+  border-radius: 3px;
+}
+
+.filter-select,
+.toggle-view-btn {
+  min-height: 27px;
+  padding: 4px 8px;
+  font-size: 0.68rem;
+  border-radius: 3px;
+}
+
+.table-card-container,
+.grid-book-card {
+  border-radius: 3px;
+}
+
+.books-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.grid-book-card {
+  padding: 10px;
+}
+
+.card-image-wrap {
+  height: 125px;
+  margin-bottom: 9px;
+  border-radius: 2px;
+}
+
+.card-title {
+  font-size: 0.8rem;
+}
+
+.card-author,
+.condition-pill,
+.stock-label,
+.store-pill,
+.view-source-btn {
+  font-size: 0.68rem;
+}
+
+.card-price {
+  font-size: 1rem;
+}
+
+.view-source-btn {
+  padding: 4px 8px;
+  border-radius: 3px;
+}
+
+.books-table th,
+.books-table td {
+  padding: 9px 10px;
+}
+
+.books-table th {
+  font-size: 0.62rem;
+}
+
+.books-table td {
+  font-size: 0.72rem;
+}
+
+@media (max-width: 640px) {
+  .hero-section {
+    margin: 0 -18px;
+  }
+
+  .hero-title {
+    font-size: 1.25rem;
+  }
+
+  .navbar-actions {
+    gap: 3px;
+  }
+
+  .nav-btn {
+    padding: 5px 7px;
+  }
+
+  .books-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Restore a distinct dark theme while keeping the compact layout */
+[data-theme="dark"] body {
+  background: #0f172a;
+  color: #f8fafc;
+}
+
+[data-theme="dark"] .navbar {
+  background: #111827;
+  border-bottom-color: #334155;
+}
+
+[data-theme="dark"] .brand-title,
+[data-theme="dark"] .hero-title,
+[data-theme="dark"] .banner-val-query,
+[data-theme="dark"] .banner-val-bold,
+[data-theme="dark"] .banner-val-store,
+[data-theme="dark"] .card-title,
+[data-theme="dark"] .table-book-title,
+[data-theme="dark"] .card-price,
+[data-theme="dark"] .price-text,
+[data-theme="dark"] .wishlist-modal-title,
+[data-theme="dark"] .wishlist-entry-title,
+[data-theme="dark"] .wishlist-entry-price {
+  color: #f8fafc;
+}
+
+[data-theme="dark"] .nav-btn {
+  background: #1e293b;
+  border-color: #475569;
+  color: #e2e8f0;
+}
+
+[data-theme="dark"] .wishlist-nav-btn {
+  background: transparent;
+  border-color: transparent;
+  color: #60a5fa;
+}
+
+[data-theme="dark"] .hero-section {
+  background: #020617;
+  border-color: #0284c7;
+}
+
+[data-theme="dark"] .hero-subtitle {
+  color: #cbd5e1;
+}
+
+[data-theme="dark"] .search-input-box {
+  background: #ffffff;
+}
+
+[data-theme="dark"] .search-input {
+  color: #172033;
+}
+
+[data-theme="dark"] .summary-banner-card {
+  background: #172554;
+  border-color: #1d4ed8;
+}
+
+[data-theme="dark"] .banner-label,
+[data-theme="dark"] .filter-icon-label,
+[data-theme="dark"] .listings-count,
+[data-theme="dark"] .card-author,
+[data-theme="dark"] .table-book-author,
+[data-theme="dark"] .placeholder-title,
+[data-theme="dark"] .wishlist-modal-subtitle,
+[data-theme="dark"] .wishlist-entry-author {
+  color: #94a3b8;
+}
+
+[data-theme="dark"] .filter-toolbar,
+[data-theme="dark"] .table-card-container,
+[data-theme="dark"] .grid-book-card {
+  background: #1e293b;
+  border-color: #475569;
+}
+
+[data-theme="dark"] .filter-select,
+[data-theme="dark"] .toggle-view-btn {
+  background: #273449;
+  border-color: #52627a;
+  color: #e2e8f0;
+}
+
+[data-theme="dark"] .books-table th {
+  background: #273449;
+  color: #cbd5e1;
+  border-bottom-color: #475569;
+}
+
+[data-theme="dark"] .books-table td {
+  border-bottom-color: #334155;
+}
+
+[data-theme="dark"] .card-image-wrap,
+[data-theme="dark"] .table-cover-thumb,
+[data-theme="dark"] .wishlist-thumb-box {
+  background: #0f172a;
+}
+
+[data-theme="dark"] .store-pill,
+[data-theme="dark"] .badge-website {
+  background: #273449;
+  border-color: #52627a;
+  color: #cbd5e1;
+}
+
+[data-theme="dark"] .card-bottom-row {
+  border-top-color: #334155;
+}
+
+[data-theme="dark"] .wishlist-modal-card,
+[data-theme="dark"] .auth-modal-card {
+  background: #1e293b;
+  border-color: #475569;
+}
+
+[data-theme="dark"] .wishlist-value-strip,
+[data-theme="dark"] .wishlist-entry-card,
+[data-theme="dark"] .auth-tabs,
+[data-theme="dark"] .auth-input {
+  background: #273449;
+  border-color: #52627a;
+}

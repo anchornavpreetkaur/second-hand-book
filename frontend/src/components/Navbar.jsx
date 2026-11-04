@@ -1,27 +1,31 @@
 import React from 'react';
-import { Bookmark, Heart, Sun, Moon, LogOut, UserPlus } from 'lucide-react';
+import { Heart, Sun, Moon, LogOut, UserPlus } from 'lucide-react';
 
 export default function Navbar({
   user,
   onOpenLogin,
   onOpenSignup,
   onLogout,
-  wishlistCount,
+  wishlistCount = 0,
   onOpenWishlist,
-  theme,
+  theme = 'dark',
   onToggleTheme
 }) {
+  const safeCount = Number(wishlistCount) || 0;
+
   return (
     <header className="navbar">
       <div className="navbar-container">
         {/* Brand */}
         <div className="navbar-brand">
-          <div className="brand-icon">
-            <Bookmark size={20} color="#ffffff" fill="#ffffff" />
-          </div>
+          <img
+            src="/book-exchange-logo.png"
+            alt="BookCompare logo"
+            className="brand-logo"
+          />
           <div className="brand-text">
-            <h1 className="brand-title">Second Hand Books</h1>
-            <span className="brand-subtitle">Search & PRICE COMPARISON</span>
+            <h1 className="brand-title">BookCompare</h1>
+            <span className="brand-subtitle">Second-hand book prices</span>
           </div>
         </div>
 
@@ -29,7 +33,7 @@ export default function Navbar({
         <div className="navbar-actions">
           {user ? (
             <>
-              <span className="user-name">{user.name}</span>
+              <span className="user-name">{user.name || 'User'}</span>
 
               <button className="nav-btn" onClick={onLogout} title="Log out">
                 <LogOut size={15} />
@@ -46,12 +50,12 @@ export default function Navbar({
           <button className="nav-btn wishlist-nav-btn" onClick={onOpenWishlist} title="Wishlist">
             <Heart
               size={15}
-              fill={wishlistCount > 0 ? '#f43f5e' : 'none'}
-              color={wishlistCount > 0 ? '#f43f5e' : 'currentColor'}
+              fill={safeCount > 0 ? '#f43f5e' : 'none'}
+              color={safeCount > 0 ? '#f43f5e' : 'currentColor'}
             />
             <span>Wishlist</span>
-            {wishlistCount > 0 && (
-              <span className="wishlist-badge">{wishlistCount}</span>
+            {safeCount > 0 && (
+              <span className="wishlist-badge">{safeCount}</span>
             )}
           </button>
 
