@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { X, Trash2, ExternalLink, Heart } from 'lucide-react';
+import { getDirectBuyUrl } from '../utils/buyLinks';
 
 function WishlistThumb({ src, title }) {
   const [imgError, setImgError] = useState(false);
@@ -105,10 +106,11 @@ export default function WishlistModal({ isOpen, onClose, wishlist = [], onRemove
                     </div>
                     <div className="wishlist-entry-actions">
                       <a
-                        href={typeof item.sourceUrl === 'string' ? item.sourceUrl : '#'}
+                        href={getDirectBuyUrl(item)}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="wishlist-view-btn"
+                        title={`Buy ${safeTitle} directly on ${safeWebsite}`}
                       >
                         <span>View</span>
                         <ExternalLink size={12} />
