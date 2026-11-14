@@ -30,9 +30,7 @@ const WEBSITES_LIST = [
   "All Sources",
   "PangoBooks",
   "BooksRun",
-  "Google Books",
-  "IT Bookstore",
-  "ISBNDB Network"
+  "Google Books"
 ];
 
 const CONDITIONS_LIST = [
@@ -467,16 +465,17 @@ export default function App() {
     });
 
   // Calculate lowest price and best bookstore for the Summary Banner
-  let lowestBook = safeBooks.find(b => b && b.isLowest === true);
-  if (!lowestBook && safeBooks.length > 0) {
-    const sortedByPrice = [...safeBooks].sort((a, b) => (Number(a?.price) || 0) - (Number(b?.price) || 0));
+  const activeList = filteredBooks.length > 0 ? filteredBooks : safeBooks;
+  let lowestBook = activeList.find(b => b && b.isLowest === true);
+  if (!lowestBook && activeList.length > 0) {
+    const sortedByPrice = [...activeList].sort((a, b) => (Number(a?.price) || 0) - (Number(b?.price) || 0));
     lowestBook = sortedByPrice[0];
   }
 
   const bestPriceText = lowestBook
     ? (lowestBook.priceFormatted || `$${(Number(lowestBook.price) || 0).toFixed(2)}`)
     : '$0.00';
-  const lowestStoreName = lowestBook ? (lowestBook.website || 'BooksRun') : 'BooksRun';
+  const lowestStoreName = lowestBook ? (lowestBook.website || '') : '';
 
   const wishlistIds = safeWishlist.map(item => item && (item.id || item._id)).filter(Boolean);
 
@@ -585,7 +584,7 @@ export default function App() {
             {/* 4-Column Summary Banner */}
             <ComparisonBanner
               searchQuery={activeQuery || searchTerm}
-              totalListings={safeBooks.length}
+              totalListings={filteredBooks.length}
               bestPrice={bestPriceText}
               lowestPriceStore={lowestStoreName}
             />

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Heart, ExternalLink, Book as BookIcon } from 'lucide-react';
+import { getDirectBuyUrl } from '../utils/buyLinks';
 
 function TableImage({ src, title }) {
   const [imgError, setImgError] = useState(false);
@@ -137,10 +138,11 @@ export default function ComparisonTable({ books = [], wishlist = [], wishlistIds
                 {/* SOURCE LINK */}
                 <td>
                   <a
-                    href={typeof book.sourceUrl === 'string' ? book.sourceUrl : '#'}
+                    href={getDirectBuyUrl(book)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="view-source-btn"
+                    title={`Buy ${safeTitle} directly on ${safeWebsite}`}
                   >
                     <span>View Source</span>
                     <ExternalLink size={12} />
